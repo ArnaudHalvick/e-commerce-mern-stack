@@ -1,8 +1,11 @@
 .loginsignup {
   width: 100%;
   height: 80vh;
-  background-color: #feedff;
-  padding-top: 100px;
+  background-color: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 0;
 }
 
 .signup-container {
@@ -10,10 +13,16 @@
   background-color: white;
   margin: auto;
   padding: 2.5rem 3.75rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease;
 }
 
 .signup-container h1 {
   margin: 20px 0px;
+  color: #333;
+  font-size: 2rem;
+  text-align: center;
 }
 
 .signup-fields {
@@ -31,6 +40,13 @@
   color: #5c5c5c;
   outline: none;
   font-size: 1.125rem;
+  border-radius: 8px;
+  transition: border-color 0.2s ease;
+}
+
+.signup-fields input:focus {
+  border-color: #ff4141;
+  box-shadow: 0 0 0 2px rgba(255, 65, 65, 0.1);
 }
 
 .signup-container button {
@@ -43,6 +59,12 @@
   font-size: 1.5rem;
   font-weight: 500;
   cursor: pointer;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.signup-container button:hover {
+  background-color: #ff2c2c;
 }
 
 .signup-login {
@@ -67,4 +89,13 @@
   color: #5c5c5c;
   font-size: 1.1rem;
   font-weight: 500;
+  background-color: #fff8f8;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.signup-agree input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: #ff4141;
 }
