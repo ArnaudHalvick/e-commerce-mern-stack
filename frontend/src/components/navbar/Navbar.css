@@ -13,7 +13,7 @@
 }
 
 .shop-nav-logo p {
-  color: #2f2f2f;
+  color: #171717;
   font-size: 2.375rem;
   font-weight: 500;
 }
@@ -23,7 +23,7 @@
   align-items: center;
   gap: 3.125rem;
   list-style: none;
-  color: #2f2f2f;
+  color: #171717;
   font-size: 1.25rem;
   font-weight: 500;
 }
@@ -42,7 +42,7 @@
   width: 80%;
   height: 0.22rem;
   border-radius: 1rem;
-  background-color: #f24747;
+  background-color: #ff6e6e;
 }
 
 .shop-nav-login-cart {
@@ -57,7 +57,7 @@
   height: 2.5rem;
   border-radius: 2rem;
   border: 0.0625rem solid #7a7a7a;
-  color: #2f2f2f;
+  color: #171717;
   font-size: 1rem;
   font-weight: 500;
   background-color: white;
@@ -76,7 +76,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #f24747;
+  background-color: #ff6e6e;
   color: white;
   border-radius: 50%;
   font-size: 0.875rem;

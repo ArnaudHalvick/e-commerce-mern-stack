@@ -14,13 +14,13 @@
 }
 
 .item-price-current {
-  color: #383838;
+  color: #171717;
   font-weight: 600;
   font-size: 1rem;
 }
 
 .item-price-previous {
-  color: #828181;
+  color: #7a7a7a;
   font-weight: 500;
   font-size: 0.9rem;
   text-decoration: line-through;

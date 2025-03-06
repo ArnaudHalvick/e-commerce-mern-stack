@@ -7,7 +7,7 @@
 }
 
 .popular-container h1 {
-  color: #181818;
+  color: #171717;
   font-size: 3rem;
   font-weight: 600;
 }
@@ -16,7 +16,7 @@
   width: 12.5rem;
   height: 0.37rem;
   border-radius: 0.65rem;
-  background-color: #262626;
+  background-color: #171717;
 }
 
 .popular-items {
