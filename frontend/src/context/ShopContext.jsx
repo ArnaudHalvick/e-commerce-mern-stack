@@ -7,8 +7,8 @@ export const ShopContext = createContext(null);
 
 const getDefaultCart = () => {
   let cart = {};
-  for (let i = 0; i < all_product.length + 1; i++) {
-    cart[i] = 0;
+  for (let product of all_product) {
+    cart[product.id] = 0;
   }
   return cart;
 };
@@ -22,7 +22,11 @@ const ShopContextProvider = (props) => {
   };
 
   const removeFromCart = (itemId) => {
-    setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
+    setCartItems((prev) => {
+      // Prevent negative quantities
+      const newQuantity = Math.max(0, prev[itemId] - 1);
+      return { ...prev, [itemId]: newQuantity };
+    });
   };
 
   const getTotalCartAmount = () => {
@@ -32,7 +36,10 @@ const ShopContextProvider = (props) => {
         let itemInfo = all_product.find(
           (product) => product.id === Number(item)
         );
-        totalAmount += itemInfo.new_price * cartItems[item];
+        // Only add to total if item exists
+        if (itemInfo) {
+          totalAmount += itemInfo.new_price * cartItems[item];
+        }
       }
     }
     return totalAmount;
