@@ -111,7 +111,8 @@
   color: white;
   border: none;
   padding: 1.2rem 1.5rem;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
+  font-weight: 600;
   margin: 0.95rem 0;
   cursor: pointer;
   text-transform: uppercase;
