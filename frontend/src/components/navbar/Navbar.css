@@ -171,4 +171,8 @@
   .shop-nav-login-cart {
     order: 3;
   }
+
+  .shop-nav-login-cart img {
+    margin-left: 1rem;
+  }
 }
