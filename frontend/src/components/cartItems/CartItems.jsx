@@ -109,13 +109,15 @@ const CartItems = () => {
                   </td>
                   <td>${new_price * cartItems[id]}</td>
                   <td>
-                    <img
-                      className="cart-remove-icon"
-                      onClick={() => handleRemoveAll(id)}
-                      src={remove_icon}
-                      alt=""
-                      title="Remove all"
-                    />
+                    <div className="cart-remove-icon-container">
+                      <img
+                        className="cart-remove-icon"
+                        onClick={() => handleRemoveAll(id)}
+                        src={remove_icon}
+                        alt=""
+                        title="Remove all"
+                      />
+                    </div>
                   </td>
                 </tr>
               );
