@@ -75,7 +75,7 @@
 /* Cart Totals Styles */
 .cart-totals {
   width: 100%;
-  margin: 30px 0;
+  margin: 1.9rem 0;
   display: flex;
   flex-direction: column;
 }
@@ -83,13 +83,13 @@
 .cart-totals-title {
   font-size: 1.5rem;
   font-weight: 600;
-  margin-bottom: 15px;
+  margin-bottom: 0.95rem;
 }
 
 .cart-totals-item {
   display: flex;
   justify-content: space-between;
-  margin: 8px 0;
+  margin: 0.5rem 0;
 }
 
 .cart-totals-label {
@@ -110,12 +110,12 @@
   background-color: #555;
   color: white;
   border: none;
-  padding: 8px 15px;
+  padding: 0.5rem 0.95rem;
   font-size: 0.8rem;
-  margin: 15px 0;
+  margin: 0.95rem 0;
   cursor: pointer;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.03rem;
 }
 
 .checkout-button:hover {
@@ -124,22 +124,22 @@
 
 /* Promo Code Section */
 .promo-code-section {
-  margin-top: 10px;
+  margin-top: 0.65rem;
 }
 
 .promo-code-text {
   font-size: 0.9rem;
-  margin-bottom: 8px;
+  margin-bottom: 0.5rem;
   color: #444;
 }
 
 .promo-code-input-container {
   display: flex;
-  max-width: 300px;
+  max-width: 18.75rem;
 }
 
 .promo-code-input {
-  padding: 6px 10px;
+  padding: 0.4rem 0.65rem;
   border: 1px solid #ccc;
   font-size: 0.9rem;
   flex-grow: 1;
@@ -149,10 +149,10 @@
   background-color: #555;
   color: white;
   border: none;
-  padding: 6px 12px;
+  padding: 0.4rem 0.75rem;
   font-size: 0.9rem;
   cursor: pointer;
-  margin-left: 5px;
+  margin-left: 0.3rem;
 }
 
 .promo-code-submit:hover {
