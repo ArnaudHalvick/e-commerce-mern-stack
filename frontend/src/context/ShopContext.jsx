@@ -19,12 +19,10 @@ const ShopContextProvider = (props) => {
   // TODO: Fix cart functions because they don't handle negative values, can lead to NaN, undefined, etc.
   const addToCart = (itemId) => {
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
-    console.log(cartItems);
   };
 
   const removeFromCart = (itemId) => {
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
-    console.log(cartItems);
   };
 
   const getTotalCartAmount = () => {
@@ -40,12 +38,24 @@ const ShopContextProvider = (props) => {
     return totalAmount;
   };
 
+  const getTotalCartItems = () => {
+    let totalItems = 0;
+    for (const item in cartItems) {
+      const quantity = cartItems[item];
+      if (quantity > 0) {
+        totalItems += quantity;
+      }
+    }
+    return totalItems;
+  };
+
   const ctxValue = {
     all_product,
     cartItems,
     addToCart,
     removeFromCart,
     getTotalCartAmount,
+    getTotalCartItems,
   };
 
   return (

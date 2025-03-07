@@ -8,8 +8,6 @@ const ShopCategory = (props) => {
   const context = useContext(ShopContext);
   const { all_product } = context || {};
 
-  console.log(context);
-
   return (
     <div className="product-category-container">
       <img className="category-banner" src={props.banner} alt="" />
