@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import "./CSS/Auth.css";
 
+// TODO: Work on responsiveness and auth pages after backend is done
+
 const Auth = () => {
   return (
     <div className="loginsignup">
