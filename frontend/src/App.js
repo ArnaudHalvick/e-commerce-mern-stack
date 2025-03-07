@@ -1,6 +1,6 @@
 import "./App.css";
 import Navbar from "./components/navbar/Navbar";
-import { BrowserRouter, Routes, Route } from "react-router-dom"; // TODO => switch to createBrowserRouter ? Not necessary but good for practice
+import { BrowserRouter, Routes, Route } from "react-router-dom"; // TODO: => switch to createBrowserRouter ? Not necessary but good for practice
 import Shop from "./pages/Shop";
 import ShopCategory from "./pages/ShopCategory";
 import Product from "./pages/Product";
