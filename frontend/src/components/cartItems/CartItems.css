@@ -194,6 +194,8 @@
   border-radius: 4px;
   font-weight: 600;
   color: #2a2a2a;
+  -moz-appearance: textfield; /* Firefox */
+  appearance: textfield; /* Standard property for compatibility */
 }
 
 /* Hide number input arrows */
@@ -201,8 +203,4 @@
 .cart-quantity-input::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
-}
-
-.cart-quantity-input {
-  -moz-appearance: textfield; /* Firefox */
 }
