@@ -10,7 +10,14 @@ import { ShopContext } from "../../context/ShopContext";
 
 const Navbar = () => {
   const { getTotalCartItems } = useContext(ShopContext);
-  const [menu, setMenu] = useState("shop");
+  const [activeMenu, setActiveMenu] = useState("shop");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const handleMenuClick = (menuItem) => {
+    setActiveMenu(menuItem);
+    // Close mobile menu after selection
+    setIsMobileMenuOpen(false);
+  };
 
   return (
     <div className="shop-navbar">
@@ -18,20 +25,32 @@ const Navbar = () => {
         <img src={logo} alt="logo" />
         <p>SHOPSITE</p>
       </div>
-      <ul className="shop-nav-menu">
-        <li onClick={() => setMenu("shop")}>
-          <Link to="/">Shop {menu === "shop" && <hr />}</Link>
+
+      {/* Hamburger Icon for Mobile */}
+      <div
+        className="hamburger"
+        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <ul className={`shop-nav-menu ${isMobileMenuOpen ? "active" : ""}`}>
+        <li onClick={() => handleMenuClick("shop")}>
+          <Link to="/">Shop {activeMenu === "shop" && <hr />}</Link>
         </li>
-        <li onClick={() => setMenu("men")}>
-          <Link to="/men">Men {menu === "men" && <hr />}</Link>
+        <li onClick={() => handleMenuClick("men")}>
+          <Link to="/men">Men {activeMenu === "men" && <hr />}</Link>
         </li>
-        <li onClick={() => setMenu("women")}>
-          <Link to="/women">Women {menu === "women" && <hr />}</Link>
+        <li onClick={() => handleMenuClick("women")}>
+          <Link to="/women">Women {activeMenu === "women" && <hr />}</Link>
         </li>
-        <li onClick={() => setMenu("kids")}>
-          <Link to="/kids">Kids {menu === "kids" && <hr />}</Link>
+        <li onClick={() => handleMenuClick("kids")}>
+          <Link to="/kids">Kids {activeMenu === "kids" && <hr />}</Link>
         </li>
       </ul>
+
       <div className="shop-nav-login-cart">
         <Link to="/login">
           <button>Login</button>

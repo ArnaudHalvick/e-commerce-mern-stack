@@ -4,6 +4,7 @@
   align-items: center;
   padding: 1.3rem;
   box-shadow: 0 0 0.625rem 0 rgba(0, 0, 0, 0.1);
+  position: relative;
 }
 
 .shop-nav-logo {
@@ -28,6 +29,7 @@
   font-weight: 500;
 }
 
+/* Each menu item */
 .shop-nav-menu li {
   display: flex;
   flex-direction: column;
@@ -37,6 +39,7 @@
   cursor: pointer;
 }
 
+/* Underline indicator */
 .shop-nav-menu hr {
   border: none;
   width: 80%;
@@ -81,4 +84,67 @@
   border-radius: 50%;
   font-size: 0.875rem;
   font-weight: 500;
+}
+
+/* Hamburger Icon - hidden on larger screens */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.hamburger span {
+  height: 3px;
+  width: 25px;
+  background: #171717;
+  margin: 4px 0;
+  transition: 0.4s;
+}
+
+/* Responsive styles */
+/* Extra small devices */
+@media (max-width: 576px) {
+  .shop-nav-logo p {
+    font-size: 1.5rem;
+  }
+
+  .shop-nav-cart-count {
+    width: 1.2rem;
+    height: 1.2rem;
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Hide default menu and login/cart on mobile */
+  .shop-nav-menu {
+    position: absolute;
+    top: 70px; /* Adjust based on your navbar height */
+    left: 0;
+    right: 0;
+    background-color: white;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem 0;
+    display: none;
+    box-shadow: 0 0 0.625rem 0 rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+
+  /* Show mobile menu when active */
+  .shop-nav-menu.active {
+    display: flex;
+  }
+
+  /* Hide login and cart if you want them inside the mobile menu
+     or reposition them as needed */
+  .shop-nav-login-cart {
+    display: none;
+  }
+
+  /* Show hamburger icon */
+  .hamburger {
+    display: flex;
+  }
 }
