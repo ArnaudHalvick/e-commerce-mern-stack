@@ -19,10 +19,12 @@ const ShopContextProvider = (props) => {
   // TODO: Fix cart functions because they don't handle negative values, can lead to NaN, undefined, etc.
   const addToCart = (itemId) => {
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
+    console.log(cartItems);
   };
 
   const removeFromCart = (itemId) => {
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
+    console.log(cartItems);
   };
 
   const ctxValue = { all_product, cartItems, addToCart, removeFromCart };
