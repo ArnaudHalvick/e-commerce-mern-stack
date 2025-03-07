@@ -6,21 +6,8 @@ import { useContext } from "react";
 import { ShopContext } from "../../context/ShopContext";
 
 const CartItems = () => {
-  const { cartItems, all_product, removeFromCart } = useContext(ShopContext);
-
-  // Calculate cart totals
-  const getTotalAmount = () => {
-    let totalAmount = 0;
-    for (const item in cartItems) {
-      if (cartItems[item] > 0) {
-        let itemInfo = all_product.find(
-          (product) => product.id === Number(item)
-        );
-        totalAmount += itemInfo.new_price * cartItems[item];
-      }
-    }
-    return totalAmount;
-  };
+  const { cartItems, all_product, removeFromCart, getTotalCartAmount } =
+    useContext(ShopContext);
 
   return (
     <div className="cart-section">
@@ -66,7 +53,7 @@ const CartItems = () => {
         <h2 className="cart-totals-title">Cart Totals</h2>
         <div className="cart-totals-item">
           <p className="cart-totals-label">Subtotal</p>
-          <p className="cart-totals-value">${getTotalAmount()}</p>
+          <p className="cart-totals-value">${getTotalCartAmount()}</p>
         </div>
         <div className="cart-totals-item">
           <p className="cart-totals-label">Shipping Fee</p>
@@ -76,7 +63,7 @@ const CartItems = () => {
         <div className="cart-totals-item">
           <p className="cart-totals-label">Total</p>
           <p className="cart-totals-value cart-total-amount">
-            ${getTotalAmount()}
+            ${getTotalCartAmount()}
           </p>
         </div>
         <button className="checkout-button">PROCEED TO CHECKOUT</button>
