@@ -158,24 +158,3 @@
 .promo-code-submit:hover {
   background-color: #333;
 }
-
-.cart-summary {
-  display: flex;
-  flex-direction: column;
-  margin-top: 2rem;
-}
-
-.cart-checkout-button {
-  width: fit-content;
-  padding: 0.8rem 2rem;
-  background-color: #555;
-  color: white;
-  border: none;
-  font-weight: 600;
-  cursor: pointer;
-  text-transform: uppercase;
-}
-
-.cart-checkout-button:hover {
-  background-color: #333;
-}
