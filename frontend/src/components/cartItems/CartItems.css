@@ -159,3 +159,50 @@
 .promo-code-submit:hover {
   background-color: #333;
 }
+
+.cart-quantity-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-quantity-adjust-btn {
+  width: 1.8rem;
+  height: 1.8rem;
+  background-color: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  color: #2a2a2a;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.cart-quantity-adjust-btn:hover {
+  background-color: #e0e0e0;
+}
+
+.cart-quantity-input {
+  width: 2.5rem;
+  height: 1.8rem;
+  text-align: center;
+  margin: 0 0.3rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  font-weight: 600;
+  color: #2a2a2a;
+}
+
+/* Hide number input arrows */
+.cart-quantity-input::-webkit-inner-spin-button,
+.cart-quantity-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.cart-quantity-input {
+  -moz-appearance: textfield; /* Firefox */
+}

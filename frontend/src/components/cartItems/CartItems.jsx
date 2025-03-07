@@ -2,12 +2,58 @@ import "./CartItems.css";
 
 import remove_icon from "../assets/cart_cross_icon.png";
 
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { ShopContext } from "../../context/ShopContext";
 
 const CartItems = () => {
-  const { cartItems, all_product, removeFromCart, getTotalCartAmount } =
-    useContext(ShopContext);
+  const {
+    cartItems,
+    all_product,
+    removeFromCart,
+    addToCart,
+    getTotalCartAmount,
+  } = useContext(ShopContext);
+
+  const [editableQuantities, setEditableQuantities] = useState({});
+
+  const handleQuantityChange = (id, value) => {
+    // Ensure value is a valid number and not less than 1
+    const newValue = Math.max(1, parseInt(value) || 1);
+    setEditableQuantities({ ...editableQuantities, [id]: newValue });
+
+    // Update cart with the new quantity immediately
+    const currentQuantity = cartItems[id];
+
+    if (newValue !== currentQuantity) {
+      // If new quantity is greater, add the difference
+      if (newValue > currentQuantity) {
+        for (let i = 0; i < newValue - currentQuantity; i++) {
+          addToCart(id);
+        }
+      }
+      // If new quantity is less, remove the difference
+      else if (newValue < currentQuantity) {
+        for (let i = 0; i < currentQuantity - newValue; i++) {
+          removeFromCart(id);
+        }
+      }
+    }
+  };
+
+  const handleQuantityBlur = (id) => {
+    // Clear the editable state
+    const newEditableQuantities = { ...editableQuantities };
+    delete newEditableQuantities[id];
+    setEditableQuantities(newEditableQuantities);
+  };
+
+  const handleRemoveAll = (id) => {
+    // Remove all items of this product
+    const quantity = cartItems[id];
+    for (let i = 0; i < quantity; i++) {
+      removeFromCart(id);
+    }
+  };
 
   return (
     <div className="cart-section">
@@ -28,17 +74,43 @@ const CartItems = () => {
                 <img className="cart-product-image" src={e.image} alt="" />
                 <p className="cart-product-title">{e.name}</p>
                 <p className="cart-product-price">${e.new_price}</p>
-                <button className="cart-quantity-button">
-                  {cartItems[e.id]}
-                </button>
+                <div className="cart-quantity-controls">
+                  <button
+                    className="cart-quantity-adjust-btn"
+                    onClick={() => removeFromCart(e.id)}
+                  >
+                    -
+                  </button>
+                  <input
+                    type="number"
+                    className="cart-quantity-input"
+                    value={
+                      editableQuantities[e.id] !== undefined
+                        ? editableQuantities[e.id]
+                        : cartItems[e.id]
+                    }
+                    onChange={(event) =>
+                      handleQuantityChange(e.id, event.target.value)
+                    }
+                    onBlur={() => handleQuantityBlur(e.id)}
+                    min="1"
+                  />
+                  <button
+                    className="cart-quantity-adjust-btn"
+                    onClick={() => addToCart(e.id)}
+                  >
+                    +
+                  </button>
+                </div>
                 <p className="cart-product-total">
                   ${e.new_price * cartItems[e.id]}
                 </p>
                 <img
                   className="cart-remove-icon"
-                  onClick={() => removeFromCart(e.id)}
+                  onClick={() => handleRemoveAll(e.id)}
                   src={remove_icon}
                   alt=""
+                  title="Remove all"
                 />
               </div>
               <hr className="cart-divider" />
