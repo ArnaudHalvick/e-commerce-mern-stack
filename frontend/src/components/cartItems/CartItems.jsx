@@ -1,7 +1,5 @@
 import "./CartItems.css";
-
 import remove_icon from "../assets/cart_cross_icon.png";
-
 import { useContext, useState } from "react";
 import { ShopContext } from "../../context/ShopContext";
 
@@ -23,7 +21,6 @@ const CartItems = () => {
 
     // Update cart with the new quantity immediately
     const currentQuantity = cartItems[id];
-
     if (newValue !== currentQuantity) {
       // If new quantity is greater, add the difference
       if (newValue > currentQuantity) {
@@ -56,69 +53,77 @@ const CartItems = () => {
   };
 
   return (
-    <div className="cart-section">
-      <div className="cart-header">
-        <p>Product</p>
-        <p>Title</p>
-        <p>Price</p>
-        <p>Quantity</p>
-        <p>Total</p>
-        <p>Remove</p>
-      </div>
-      <hr className="cart-divider" />
-      {all_product.map((e) => {
-        if (cartItems[e.id] > 0) {
-          return (
-            <div key={e.id}>
-              <div className="cart-item">
-                <img className="cart-product-image" src={e.image} alt="" />
-                <p className="cart-product-title">{e.name}</p>
-                <p className="cart-product-price">${e.new_price}</p>
-                <div className="cart-quantity-controls">
-                  <button
-                    className="cart-quantity-adjust-btn"
-                    onClick={() => removeFromCart(e.id)}
-                  >
-                    -
-                  </button>
-                  <input
-                    type="number"
-                    className="cart-quantity-input"
-                    value={
-                      editableQuantities[e.id] !== undefined
-                        ? editableQuantities[e.id]
-                        : cartItems[e.id]
-                    }
-                    onChange={(event) =>
-                      handleQuantityChange(e.id, event.target.value)
-                    }
-                    onBlur={() => handleQuantityBlur(e.id)}
-                    min="1"
-                  />
-                  <button
-                    className="cart-quantity-adjust-btn"
-                    onClick={() => addToCart(e.id)}
-                  >
-                    +
-                  </button>
-                </div>
-                <p className="cart-product-total">
-                  ${e.new_price * cartItems[e.id]}
-                </p>
-                <img
-                  className="cart-remove-icon"
-                  onClick={() => handleRemoveAll(e.id)}
-                  src={remove_icon}
-                  alt=""
-                  title="Remove all"
-                />
-              </div>
-              <hr className="cart-divider" />
-            </div>
-          );
-        }
-        return null;
-      })}
+    <div className="cart-container">
+      {/* Cart Table */}
+      <table className="cart-table">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Title</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+            <th>Remove</th>
+          </tr>
+        </thead>
+        <tbody>
+          {all_product.map((product) => {
+            const { id, image, name, new_price } = product;
+            if (cartItems[id] > 0) {
+              return (
+                <tr key={id}>
+                  <td>
+                    <img className="cart-product-image" src={image} alt="" />
+                  </td>
+                  <td>{name}</td>
+                  <td>${new_price}</td>
+                  <td>
+                    <div className="cart-quantity-controls">
+                      <button
+                        className="cart-quantity-adjust-btn"
+                        onClick={() => removeFromCart(id)}
+                      >
+                        -
+                      </button>
+                      <input
+                        type="number"
+                        className="cart-quantity-input"
+                        value={
+                          editableQuantities[id] !== undefined
+                            ? editableQuantities[id]
+                            : cartItems[id]
+                        }
+                        onChange={(event) =>
+                          handleQuantityChange(id, event.target.value)
+                        }
+                        onBlur={() => handleQuantityBlur(id)}
+                        min="1"
+                      />
+                      <button
+                        className="cart-quantity-adjust-btn"
+                        onClick={() => addToCart(id)}
+                      >
+                        +
+                      </button>
+                    </div>
+                  </td>
+                  <td>${new_price * cartItems[id]}</td>
+                  <td>
+                    <img
+                      className="cart-remove-icon"
+                      onClick={() => handleRemoveAll(id)}
+                      src={remove_icon}
+                      alt=""
+                      title="Remove all"
+                    />
+                  </td>
+                </tr>
+              );
+            }
+            return null;
+          })}
+        </tbody>
+      </table>
 
       {/* Cart Totals Section */}
       <div className="cart-totals">
