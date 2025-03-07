@@ -9,8 +9,8 @@ const CartItems = () => {
   const { cartItems, all_product, removeFromCart } = useContext(ShopContext);
 
   return (
-    <div className="cartitems">
-      <div className="cartitems-format-main">
+    <div className="cart-section">
+      <div className="cart-header">
         <p>Product</p>
         <p>Title</p>
         <p>Price</p>
@@ -18,29 +18,33 @@ const CartItems = () => {
         <p>Total</p>
         <p>Remove</p>
       </div>
-      <hr />
+      <hr className="cart-divider" />
       {all_product.map((e) => {
         if (cartItems[e.id] > 0) {
           return (
-            <div>
-              <div className="cartitems-format">
-                <img className="carticon-product-icon" src={e.image} alt="" />
-                <p>{e.name}</p>
-                <p>${e.new_price}</p>
-                <button className="cartitems-quantity">
+            <div key={e.id}>
+              <div className="cart-item">
+                <img className="cart-product-image" src={e.image} alt="" />
+                <p className="cart-product-title">{e.name}</p>
+                <p className="cart-product-price">${e.new_price}</p>
+                <button className="cart-quantity-button">
                   {cartItems[e.id]}
                 </button>
-                <p>${e.new_price * cartItems[e.id]}</p>
+                <p className="cart-product-total">
+                  ${e.new_price * cartItems[e.id]}
+                </p>
                 <img
+                  className="cart-remove-icon"
                   onClick={() => removeFromCart(e.id)}
                   src={remove_icon}
                   alt=""
                 />
               </div>
-              <hr />
+              <hr className="cart-divider" />
             </div>
           );
         }
+        return null;
       })}
     </div>
   );
