@@ -3,8 +3,6 @@ import all_product from "../components/assets/all_product";
 
 export const ShopContext = createContext(null);
 
-// TODO: make cart use ids instead of index because if product order changes, the index will change
-
 const getDefaultCart = () => {
   let cart = {};
   for (let product of all_product) {
@@ -16,14 +14,12 @@ const getDefaultCart = () => {
 const ShopContextProvider = (props) => {
   const [cartItems, setCartItems] = useState(getDefaultCart());
 
-  // TODO: Fix cart functions because they don't handle negative values, can lead to NaN, undefined, etc.
   const addToCart = (itemId) => {
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
   };
 
   const removeFromCart = (itemId) => {
     setCartItems((prev) => {
-      // Prevent negative quantities
       const newQuantity = Math.max(0, prev[itemId] - 1);
       return { ...prev, [itemId]: newQuantity };
     });
@@ -36,7 +32,6 @@ const ShopContextProvider = (props) => {
         let itemInfo = all_product.find(
           (product) => product.id === Number(item)
         );
-        // Only add to total if item exists
         if (itemInfo) {
           totalAmount += itemInfo.new_price * cartItems[item];
         }
