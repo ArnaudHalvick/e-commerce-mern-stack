@@ -8,6 +8,20 @@ import { ShopContext } from "../../context/ShopContext";
 const CartItems = () => {
   const { cartItems, all_product, removeFromCart } = useContext(ShopContext);
 
+  // Calculate cart totals
+  const getTotalAmount = () => {
+    let totalAmount = 0;
+    for (const item in cartItems) {
+      if (cartItems[item] > 0) {
+        let itemInfo = all_product.find(
+          (product) => product.id === Number(item)
+        );
+        totalAmount += itemInfo.new_price * cartItems[item];
+      }
+    }
+    return totalAmount;
+  };
+
   return (
     <div className="cart-section">
       <div className="cart-header">
@@ -46,6 +60,42 @@ const CartItems = () => {
         }
         return null;
       })}
+
+      {/* Cart Totals Section */}
+      <div className="cart-totals">
+        <h2 className="cart-totals-title">Cart Totals</h2>
+        <div className="cart-totals-item">
+          <p className="cart-totals-label">Subtotal</p>
+          <p className="cart-totals-value">${getTotalAmount()}</p>
+        </div>
+        <div className="cart-totals-item">
+          <p className="cart-totals-label">Shipping Fee</p>
+          <p className="cart-totals-value">Free</p>
+        </div>
+        <hr className="cart-divider" />
+        <div className="cart-totals-item">
+          <p className="cart-totals-label">Total</p>
+          <p className="cart-totals-value cart-total-amount">
+            ${getTotalAmount()}
+          </p>
+        </div>
+        <button className="checkout-button">PROCEED TO CHECKOUT</button>
+
+        {/* Promo Code Section */}
+        <div className="promo-code-section">
+          <p className="promo-code-text">
+            If you have a promo code, Enter it here
+          </p>
+          <div className="promo-code-input-container">
+            <input
+              type="text"
+              className="promo-code-input"
+              placeholder="promo code"
+            />
+            <button className="promo-code-submit">Submit</button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
