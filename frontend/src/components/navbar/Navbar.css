@@ -103,7 +103,7 @@
 
 /* Responsive styles */
 /* Extra small devices */
-@media (max-width: 576px) {
+@media (max-width: 575.98px) {
   .shop-nav-logo p {
     font-size: 1.2rem;
   }
@@ -125,7 +125,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767.98px) {
   .shop-navbar {
     justify-content: space-between;
     padding: 1.3rem 1rem;

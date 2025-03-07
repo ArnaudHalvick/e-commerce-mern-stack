@@ -97,7 +97,6 @@
   .hero-section-left {
     padding: 2rem;
     align-items: center;
-    text-align: center;
   }
 
   .hero-section-left p {
@@ -106,6 +105,11 @@
 
   .hero-section-right {
     margin-top: 2rem;
+  }
+
+  .hero-section-right img {
+    max-width: 80%;
+    height: auto;
   }
 }
 
@@ -122,5 +126,10 @@
     width: 14rem;
     height: 3rem;
     font-size: 1rem;
+  }
+
+  .hero-section-right img {
+    max-width: 70%;
+    height: auto;
   }
 }
