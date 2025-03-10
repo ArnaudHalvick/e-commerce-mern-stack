@@ -223,12 +223,26 @@ app.post("/login", async (req, res) => {
 });
 
 // Creating endpoint for newcollection data
+// TODO: Make this endpoint dynamic so it can be used for any category
 app.get("/newcollection", async (req, res) => {
   let products = await Product.find();
   let newcollection = products.slice(-8);
   res.send(newcollection);
 });
 
+// Creating endpoint for featured women's products
+app.get("/featured-women", async (req, res) => {
+  let products = await Product.find({ category: "women" });
+  let featuredWomen = products.slice(-8);
+  res.send(featuredWomen);
+});
+
+// Creating endpoint for featured men's products
+app.get("/featured-men", async (req, res) => {
+  let products = await Product.find();
+  let featuredMen = products.filter((product) => product.category === "men");
+  res.send(featuredMen);
+});
 // Listening to the port
 app.listen(port, (error) => {
   if (error) {
