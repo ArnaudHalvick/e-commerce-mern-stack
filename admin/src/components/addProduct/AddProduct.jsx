@@ -5,6 +5,17 @@ import { useState } from "react";
 
 const AddProduct = () => {
   const [image, setImage] = useState(null);
+  const [product, setProduct] = useState({
+    name: "",
+    image: "",
+    category: "women",
+    new_price: "",
+    old_price: "",
+  });
+
+  const changeHandler = (e) => {
+    setProduct({ ...product, [e.target.name]: e.target.value });
+  };
 
   const imageHandler = (e) => {
     const file = e.target.files[0];
@@ -19,7 +30,13 @@ const AddProduct = () => {
     <div className="product-form">
       <div className="product-form__field">
         <p>Product Name</p>
-        <input type="text" name="name" placeholder="Enter Product Name" />
+        <input
+          type="text"
+          name="name"
+          placeholder="Enter Product Name"
+          value={product.name}
+          onChange={changeHandler}
+        />
       </div>
       <div className="product-form__price-container">
         <div className="product-form__field">
@@ -28,16 +45,28 @@ const AddProduct = () => {
             type="text"
             name="old_price"
             placeholder="Enter Product Price"
+            value={product.old_price}
+            onChange={changeHandler}
           />
         </div>
         <div className="product-form__field">
           <p>Offer Price</p>
-          <input type="text" name="new_price" placeholder="Enter Offer Price" />
+          <input
+            type="text"
+            name="new_price"
+            placeholder="Enter Offer Price"
+            value={product.new_price}
+            onChange={changeHandler}
+          />
         </div>
       </div>
       <div className="product-form__field">
         <p>Product Category</p>
-        <select className="product-form__category-select">
+        <select
+          className="product-form__category-select"
+          value={product.category}
+          onChange={changeHandler}
+        >
           <option value="women">Women</option>
           <option value="men">Men</option>
           <option value="kid">Kids</option>
