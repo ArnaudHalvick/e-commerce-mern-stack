@@ -223,10 +223,10 @@ app.post("/login", async (req, res) => {
 });
 
 // Creating endpoint for newcollection data
-app.get("/newcollections", async (req, res) => {
+app.get("/newcollection", async (req, res) => {
   let products = await Product.find();
-  let newcollections = products.slice(-8);
-  res.send(newcollections);
+  let newcollection = products.slice(-8);
+  res.send(newcollection);
 });
 
 // Listening to the port
