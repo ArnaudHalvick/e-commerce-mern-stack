@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import "./ListProduct.css";
 
+// TODO: Rework the layout, need to use table with all info in a line with responsive design for smaller screens
+// Also implement product editing
+
 const ListProduct = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
