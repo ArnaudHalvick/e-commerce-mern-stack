@@ -72,7 +72,7 @@ const AddProduct = () => {
         });
         setImage(null);
       }
-      console.log(data);
+
       alert("Product Added Successfully");
     } catch (error) {
       console.error("Error adding product:", error);
