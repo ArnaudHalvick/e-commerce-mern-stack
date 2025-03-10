@@ -1,0 +1,5 @@
+.admin {
+  display: flex;
+}
+
+/* TODO: Make admin page responsive. Make it flex direction row for small screens */
