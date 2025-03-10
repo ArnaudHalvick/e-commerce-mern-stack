@@ -1,18 +1,26 @@
-import { createContext, useState } from "react";
-import all_product from "../components/assets/all_product";
+import { createContext, useState, useEffect } from "react";
+
+// TODO: review this code because I doubt that it's best practice. Check other file for the 300 item cart initialization
 
 export const ShopContext = createContext(null);
 
 const getDefaultCart = () => {
   let cart = {};
-  for (let product of all_product) {
-    cart[product.id] = 0;
+  for (let i = 0; i < 300 + 1; i++) {
+    cart[i] = 0;
   }
   return cart;
 };
 
 const ShopContextProvider = (props) => {
+  const [all_product, setAll_Product] = useState([]);
   const [cartItems, setCartItems] = useState(getDefaultCart());
+
+  useEffect(() => {
+    fetch("http://localhost:4000/all-products")
+      .then((res) => res.json())
+      .then((data) => setAll_Product(data));
+  }, []);
 
   const addToCart = (itemId) => {
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
