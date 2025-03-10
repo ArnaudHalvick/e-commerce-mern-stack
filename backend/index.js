@@ -223,7 +223,7 @@ app.post("/login", async (req, res) => {
 });
 
 // Creating endpoint for newcollection data
-// TODO: Make this endpoint dynamic so it can be used for any category
+// TODO: Make this endpoint dynamic so it can be used for any category ? Or mix categories ?
 app.get("/newcollection", async (req, res) => {
   let products = await Product.find();
   let newcollection = products.slice(-8);
@@ -237,12 +237,6 @@ app.get("/featured-women", async (req, res) => {
   res.send(featuredWomen);
 });
 
-// Creating endpoint for featured men's products
-app.get("/featured-men", async (req, res) => {
-  let products = await Product.find();
-  let featuredMen = products.filter((product) => product.category === "men");
-  res.send(featuredMen);
-});
 // Listening to the port
 app.listen(port, (error) => {
   if (error) {
