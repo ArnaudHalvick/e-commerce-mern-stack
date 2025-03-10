@@ -5,7 +5,7 @@ import { useState } from "react";
 // TODO: Work on responsiveness and auth pages after backend is done
 
 const Auth = () => {
-  const [state, setState] = useState("Signup");
+  const [state, setState] = useState("Login");
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -20,8 +20,31 @@ const Auth = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  //TODO: Replace these 2 functions by one handleSubmit function
-  const login = () => {};
+  const login = async () => {
+    let responseData;
+    await fetch("http://localhost:4000/login", {
+      method: "POST",
+      body: JSON.stringify({
+        email: formData.email,
+        password: formData.password,
+      }),
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        responseData = data;
+      });
+
+    if (responseData.success) {
+      localStorage.setItem("auth-token", responseData.token);
+      window.location.replace("/"); // Replace this with React Router Navigate
+    } else {
+      alert(responseData.message); // Alert the user if login fails
+    }
+  };
 
   const signup = async () => {
     let responseData;
