@@ -4,7 +4,7 @@
   padding: 1.5rem 0;
   gap: 1rem;
   width: 250px;
-  min-height: calc(100vh - 4.5rem); /* Subtract navbar height */
+  min-height: calc(100vh - 5rem); /* Subtract navbar height */
   background: white;
   border-right: 1px solid #eee;
 }
