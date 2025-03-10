@@ -137,6 +137,92 @@ app.get("/all-products", async (req, res) => {
   res.send(products);
 });
 
+// Schema for the user
+const Users = mongoose.model("Users", {
+  name: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
+  cartData: {
+    type: Object,
+    default: {},
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
+// Creating endpoint for user registration
+// TODO: Rework signup, cart, login, etc.
+app.post("/signup", async (req, res) => {
+  let check = await Users.findOne({ email: req.body.email });
+  if (check) {
+    return res.status(400).json({
+      success: false,
+      message: "User already exists",
+    });
+  }
+
+  let cart = {};
+  for (let i = 0; i < 300; i++) {
+    cart[i] = 0;
+  }
+
+  const user = new Users({
+    name: req.body.username,
+    email: req.body.email,
+    password: req.body.password,
+    cartData: cart,
+  });
+
+  await user.save();
+
+  const data = {
+    user: {
+      id: user.id,
+    },
+  };
+
+  const token = jwt.sign(data, "secret_ecom");
+
+  res.json({ success: true, token });
+});
+
+// Creating endpoint for user login
+// TODO: rework login because it's not secure AT ALL (lol ?)
+app.post("/login", async (req, res) => {
+  let user = await Users.findOne({ email: req.body.email });
+  if (user) {
+    const passCompare = req.body.password === user.password;
+    if (passCompare) {
+      const data = {
+        user: {
+          id: user.id,
+        },
+      };
+
+      const token = jwt.sign(data, "secret_ecom");
+
+      res.json({ success: true, token });
+    } else {
+      res.json({ success: false, message: "Invalid password" });
+    }
+  } else {
+    res.json({ success: false, message: "User not found" });
+  }
+});
+
+// Listening to the port
 app.listen(port, (error) => {
   if (error) {
     console.log(error);
