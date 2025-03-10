@@ -1,10 +1,11 @@
 import "./AddProduct.css";
-
+import axios from "axios";
 import upload_area from "../../assets/admin_assets/upload_area.svg";
 import { useState } from "react";
 
 const AddProduct = () => {
   const [image, setImage] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [product, setProduct] = useState({
     name: "",
     image: "",
@@ -26,57 +27,85 @@ const AddProduct = () => {
     }
   };
 
-  const addProduct = async () => {
-    try {
-      // Create a new FormData instance
-      let formData = new FormData();
+  const validateForm = () => {
+    if (!product.name.trim()) {
+      alert("Please enter a product name");
+      return false;
+    }
+    if (!product.new_price || product.new_price <= 0) {
+      alert("Please enter a valid new price");
+      return false;
+    }
+    if (!product.old_price || product.old_price <= 0) {
+      alert("Please enter a valid old price");
+      return false;
+    }
+    if (!image) {
+      alert("Please upload a product image");
+      return false;
+    }
+    return true;
+  };
 
-      // Append the image file with field name 'product'
+  const addProduct = async () => {
+    if (!validateForm()) return;
+
+    try {
+      setLoading(true);
+      // Create form data for image upload
+      const formData = new FormData();
       formData.append("product", image);
 
-      // Append all product details
-      formData.append("name", product.name);
-      formData.append("category", product.category);
-      formData.append("new_price", product.new_price);
-      formData.append("old_price", product.old_price);
-
-      // Send the data to your backend API
-      const response = await fetch("http://localhost:4000/upload", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-        },
-        body: formData,
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        product.image = data.image_url;
-        await fetch("http://localhost:4000/add-product", {
-          method: "POST",
+      // Upload image first
+      const uploadResponse = await axios.post(
+        "http://localhost:4000/upload",
+        formData,
+        {
           headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
+            "Content-Type": "multipart/form-data",
           },
-          body: JSON.stringify(product),
-        });
+        }
+      );
 
-        // Reset the form
-        setProduct({
-          name: "",
-          image: "",
-          category: "women",
-          new_price: "",
-          old_price: "",
-        });
-        setImage(null);
+      if (uploadResponse.data.success) {
+        // Create product with image URL
+        const productData = {
+          ...product,
+          image: uploadResponse.data.image_url,
+        };
+
+        // Add product to database
+        const addResponse = await axios.post(
+          "http://localhost:4000/add-product",
+          productData,
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        if (addResponse.data.success) {
+          alert("Product Added Successfully!");
+          // Reset form
+          setProduct({
+            name: "",
+            image: "",
+            category: "women",
+            new_price: "",
+            old_price: "",
+          });
+          setImage(null);
+        }
       }
-
-      alert("Product Added Successfully");
     } catch (error) {
       console.error("Error adding product:", error);
-      alert("Error adding product. Please try again.");
+      alert(
+        error.response?.data?.message ||
+          "Error adding product. Please try again."
+      );
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -90,19 +119,21 @@ const AddProduct = () => {
           placeholder="Enter Product Name"
           value={product.name}
           onChange={changeHandler}
+          required
         />
       </div>
       <div className="product-form__price-container">
         <div className="product-form__field">
-          <p>Product Price</p>
+          <p>Original Price</p>
           <input
             type="number"
             name="old_price"
-            placeholder="Enter Product Price"
+            placeholder="Enter Original Price"
             value={product.old_price}
             onChange={changeHandler}
             min="0"
             step="0.01"
+            required
           />
         </div>
         <div className="product-form__field">
@@ -115,20 +146,22 @@ const AddProduct = () => {
             onChange={changeHandler}
             min="0"
             step="0.01"
+            required
           />
         </div>
       </div>
       <div className="product-form__field">
         <p>Product Category</p>
         <select
+          name="category"
           className="product-form__category-select"
           value={product.category}
           onChange={changeHandler}
+          required
         >
           <option value="women">Women</option>
           <option value="men">Men</option>
           <option value="kid">Kids</option>
-          {/* TODO: Check if we can change value to kids instead of kid */}
         </select>
       </div>
       <div className="product-form__field">
@@ -147,13 +180,15 @@ const AddProduct = () => {
           hidden
           accept="image/*"
           onChange={imageHandler}
+          required
         />
       </div>
       <button
-        onClick={() => addProduct()}
+        onClick={addProduct}
         className="product-form__submit-button"
+        disabled={loading}
       >
-        Add Product
+        {loading ? "Adding Product..." : "Add Product"}
       </button>
     </div>
   );
