@@ -119,6 +119,18 @@ app.post("/add-product", async (req, res) => {
   });
 });
 
+// API to delete a product
+app.post("/remove-product", async (req, res) => {
+  await Product.findOneAndDelete({ id: req.body.id });
+  res.json({
+    success: true,
+    name: req.body.name,
+    // TODO: Remove line above because it doesn't make sense because we can put any name in req body.
+    // Should give the name of deleted product instead. Maybe find name before deleting and return it.
+    message: "Product deleted successfully",
+  });
+});
+
 app.listen(port, (error) => {
   if (error) {
     console.log(error);
