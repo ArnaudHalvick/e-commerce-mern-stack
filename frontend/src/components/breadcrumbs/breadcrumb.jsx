@@ -1,6 +1,8 @@
 import "./breadcrumb.css";
 import arrow_icon from "../assets/breadcrum_arrow.png";
 
+// TODO: Fix undefined error on refresh
+
 const Breadcrumb = (props) => {
   const { product } = props;
 

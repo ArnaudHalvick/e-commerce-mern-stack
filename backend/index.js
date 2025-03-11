@@ -111,7 +111,6 @@ app.post("/add-product", async (req, res) => {
     date: req.body.date,
     available: req.body.available,
   });
-  console.log(product);
   await product.save();
   res.json({
     success: true,
@@ -222,7 +221,7 @@ app.post("/login", async (req, res) => {
   }
 });
 
-// Creating endpoint for newcollection data
+// Endpoint for newcollection data
 // TODO: Make this endpoint dynamic so it can be used for any category ? Or mix categories ?
 app.get("/newcollection", async (req, res) => {
   let products = await Product.find();
@@ -230,11 +229,38 @@ app.get("/newcollection", async (req, res) => {
   res.send(newcollection);
 });
 
-// Creating endpoint for featured women's products
+// Endpoint for featured women's products
 app.get("/featured-women", async (req, res) => {
   let products = await Product.find({ category: "women" });
   let featuredWomen = products.slice(-8);
   res.send(featuredWomen);
+});
+
+// Middleware to fetch user
+const fetchUser = async (req, res, next) => {
+  const token = req.headers["auth-token"];
+  if (!token) {
+    return res.status(401).json({ message: "Please login to continue" });
+  } else {
+    try {
+      const data = jwt.verify(token, "secret_ecom");
+      req.user = data.user;
+      next();
+    } catch (error) {
+      return res.status(401).json({ message: "Please login to continue" });
+    }
+  }
+};
+
+// Endpoint for cart data
+app.post("/add-to-cart", fetchUser, async (req, res) => {
+  let userData = await Users.findOne({ _id: req.user.id });
+  userData.cartData[req.body.itemId] += 1;
+  await Users.findOneAndUpdate(
+    { _id: req.user.id },
+    { cartData: userData.cartData }
+  );
+  res.json({ success: true });
 });
 
 // Listening to the port

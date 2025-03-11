@@ -24,6 +24,18 @@ const ShopContextProvider = (props) => {
 
   const addToCart = (itemId) => {
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
+    // TODO: Improve this code used to add item to cart and store it in the database
+    if (localStorage.getItem("auth-token")) {
+      fetch("http://localhost:4000/add-to-cart", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          "auth-token": `${localStorage.getItem("auth-token")}`,
+        },
+        body: JSON.stringify({ itemId }),
+      }).then((res) => res.json());
+    }
   };
 
   const removeFromCart = (itemId) => {
