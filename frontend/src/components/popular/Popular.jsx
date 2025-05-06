@@ -4,12 +4,42 @@ import { useState, useEffect } from "react";
 
 const Popular = () => {
   const [popular, setPopular] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
+    setLoading(true);
     fetch("http://localhost:4000/featured-women")
-      .then((res) => res.json())
-      .then((data) => setPopular(data));
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log("Popular products fetched:", data.length);
+        setPopular(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching popular products:", error);
+        setError(error.message);
+        setLoading(false);
+      });
   }, []);
+
+  if (loading)
+    return (
+      <div className="popular-container">
+        <h2>Loading popular products...</h2>
+      </div>
+    );
+  if (error)
+    return (
+      <div className="popular-container">
+        <h2>Error: {error}</h2>
+      </div>
+    );
 
   return (
     <div className="popular-container">

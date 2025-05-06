@@ -4,12 +4,42 @@ import { useState, useEffect } from "react";
 
 const NewCollection = () => {
   const [newCollection, setNewCollection] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
+    setLoading(true);
     fetch("http://localhost:4000/newcollection")
-      .then((res) => res.json())
-      .then((data) => setNewCollection(data));
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log("New collection fetched:", data.length);
+        setNewCollection(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching new collection:", error);
+        setError(error.message);
+        setLoading(false);
+      });
   }, []);
+
+  if (loading)
+    return (
+      <div className="new-collections">
+        <h2>Loading new collection...</h2>
+      </div>
+    );
+  if (error)
+    return (
+      <div className="new-collections">
+        <h2>Error: {error}</h2>
+      </div>
+    );
 
   return (
     <div className="new-collections">
@@ -22,8 +52,8 @@ const NewCollection = () => {
             id={item.id}
             name={item.name}
             image={item.image}
-            new_price={item.new_price}
-            old_price={item.old_price}
+            new_price={`$${item.new_price}`}
+            old_price={`$${item.old_price}`}
           />
         ))}
       </div>

@@ -10,7 +10,14 @@ const cors = require("cors");
 
 const app = express();
 
-app.use(cors());
+// Update CORS configuration to be more permissive
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization", "auth-token", "Accept"],
+  })
+);
 app.use(express.json());
 
 // Log environment variables for debugging
@@ -44,7 +51,16 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 // Creating Upload Endpoint for images
-app.use("/images", express.static(path.join(__dirname, "upload/images")));
+app.use(
+  "/images",
+  express.static(path.join(__dirname, "upload/images"), {
+    setHeaders: (res, path) => {
+      res.set("Access-Control-Allow-Origin", "*");
+      res.set("Access-Control-Allow-Methods", "GET");
+      res.set("Access-Control-Allow-Headers", "Content-Type");
+    },
+  })
+);
 app.post("/upload", upload.single("product"), (req, res) => {
   res.json({
     success: 1,

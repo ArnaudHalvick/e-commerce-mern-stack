@@ -18,8 +18,19 @@ const ShopContextProvider = (props) => {
 
   useEffect(() => {
     fetch("http://localhost:4000/all-products")
-      .then((res) => res.json())
-      .then((data) => setAll_Product(data));
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log("Products fetched:", data.length);
+        setAll_Product(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching products:", error);
+      });
 
     if (localStorage.getItem("auth-token")) {
       // TODO: Improve this code used to get cart data from the database
@@ -32,9 +43,17 @@ const ShopContextProvider = (props) => {
         },
         body: "",
       })
-        .then((res) => res.json())
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error(`HTTP error! Status: ${res.status}`);
+          }
+          return res.json();
+        })
         .then((data) => {
           setCartItems(data);
+        })
+        .catch((error) => {
+          console.error("Error fetching cart data:", error);
         });
     }
   }, []);
