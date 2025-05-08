@@ -23,7 +23,7 @@ const Navbar = () => {
     <div className="shop-navbar">
       <div className="shop-nav-logo">
         <img src={logo} alt="logo" />
-        <p>SHOPSITE</p>
+        <p>BASE PROJECT</p>
       </div>
 
       {/* Hamburger Icon for Mobile */}
